@@ -377,6 +377,18 @@ public class ExtractorTest extends TestCase {
     assertTrue("Should not extract URLs w/o protocol", extractor.extractURLs(text).isEmpty());
   }
 
+
+  public void testUrlWithUnicode() {
+    final String text = "http://www.詹姆斯.com http://www.詹姆斯.com/詹姆斯";
+    assertList("Failed to extract URLs with unicode",
+        new String[]{"http://www.詹姆斯.com", "http://www.詹姆斯.com/詹姆斯"},
+        extractor.extractURLs(text));
+
+    final String text1 = "https://简体中文.winshipway.com/good/";
+    assertList("Failed to extract URLs with unicode",
+        new String[]{"https://简体中文.winshipway.com/good/"},
+        extractor.extractURLs(text1));
+  }
   /**
    * Helper method for asserting that the List of extracted Strings match the expected values.
    *

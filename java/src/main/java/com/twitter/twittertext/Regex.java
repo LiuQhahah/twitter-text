@@ -148,7 +148,8 @@ public class Regex {
   private static final String URL_VALID_PRECEDING_CHARS =
       "(?:[^a-z0-9@＠$#＃" + INVALID_CHARACTERS + "]|[" + DIRECTIONAL_CHARACTERS + "]|^)";
 
-  private static final String URL_VALID_CHARS = "[a-z0-9" + LATIN_ACCENTS_CHARS + "]";
+  private static final String URL_UNICODE_CHARS ="\\p{M}\\p{L}";
+  private static final String URL_VALID_CHARS = "[a-z0-9" + URL_UNICODE_CHARS +LATIN_ACCENTS_CHARS + "]";
   private static final String URL_VALID_SUBDOMAIN =
       "(?>(?:" + URL_VALID_CHARS + "[" + URL_VALID_CHARS + "\\-_]*)?" + URL_VALID_CHARS + "\\.)";
   private static final String URL_VALID_DOMAIN_NAME =
@@ -159,7 +160,7 @@ public class Regex {
   // Any non-space, non-punctuation characters.
   // \p{Z} = any kind of whitespace or invisible separator.
   private static final String URL_VALID_UNICODE_CHARS =
-      "[^" + PUNCTUATION_CHARS + "\\s\\p{Z}\\p{InGeneralPunctuation}]";
+      "[^" + PUNCTUATION_CHARS+ URL_UNICODE_CHARS + "\\s\\p{Z}\\p{InGeneralPunctuation}]";
   private static final String URL_VALID_UNICODE_DOMAIN_NAME =
       "(?:(?:" + URL_VALID_UNICODE_CHARS + "[" + URL_VALID_UNICODE_CHARS + "\\-]*)?" +
           URL_VALID_UNICODE_CHARS + "\\.)";
@@ -188,7 +189,7 @@ public class Regex {
 
   private static final String URL_VALID_GENERAL_PATH_CHARS =
       "[a-z0-9!\\*';:=\\+,.\\$/%#\\[\\]\\-\\u2013_~\\|&@" +
-          LATIN_ACCENTS_CHARS + CYRILLIC_CHARS + "]";
+          LATIN_ACCENTS_CHARS + CYRILLIC_CHARS + URL_UNICODE_CHARS + "]";
 
   /**
    * Allow URL paths to contain up to two nested levels of balanced parens
@@ -216,7 +217,7 @@ public class Regex {
    *   2. Allow =&# for empty URL parameters and other URL-join artifacts
    */
   private static final String URL_VALID_PATH_ENDING_CHARS =
-      "[a-z0-9=_#/\\-\\+" + LATIN_ACCENTS_CHARS + CYRILLIC_CHARS + "]|(?:" +
+      "[a-z0-9=_#/\\-\\+" + LATIN_ACCENTS_CHARS + CYRILLIC_CHARS + URL_UNICODE_CHARS + "]|(?:" +
           URL_BALANCED_PARENS + ")";
 
   private static final String URL_VALID_PATH = "(?:" +
